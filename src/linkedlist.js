@@ -10,25 +10,18 @@ export function Node(value, nextNode) {
 export function LinkedList() {
   let list = {};
 
-  // Auxillary methods
+  // Aux methods
+  const initSample = () =>
+    (list = makeList(
+      { key1: "value1" },
+      { key2: "value2" },
+      { key3: "value3" },
+      { key4: "value4" },
+    ));
   const getList = () => list;
-  const initSample = () => (list = makeList(1, 2, 3, 4));
   const clear = () => (list = {});
 
   // Required methods
-  const append = (value) => {
-    function traverse(value, list) {
-      if (list.next === null) list.next = Node(value);
-      else traverse(value, list.next);
-    }
-
-    if (size() === 0) {
-      list = Node(value);
-    } else {
-      traverse(value, list);
-    }
-  };
-
   const prepend = (value) => {
     list = size() === 0 ? Node(value) : Node(value, list);
   };
@@ -43,19 +36,41 @@ export function LinkedList() {
     return traverse(list);
   };
 
-  const head = () => {
-    return size() === 0 ? undefined : list.value;
-  };
+  const findLink = (key) => {
+    if (size() === 0) return null;
 
-  const tail = () => {
-    function traverse(list) {
-      if (list.next === null) return list.value;
-      return traverse(list.next);
+    let currentNode = list;
+    while (!(key in currentNode.value) && currentNode.next !== null) {
+      currentNode = currentNode.next;
     }
 
-    return size() === 0 ? undefined : traverse(list);
+    return key in currentNode.value ? currentNode.value : null;
   };
 
+  const removeNode = (key) => {
+    if (size() === 0) return false;
+
+    // Found at first index
+    if (key in list.value) {
+      list = size() === 1 ? {} : list.next;
+      return true;
+    }
+
+    // Traverse to find in rest
+    let currentNode = list;
+    while (currentNode.next !== null && !(key in currentNode.next.value)) {
+      currentNode = currentNode.next;
+    }
+
+    if (currentNode.next !== null && key in currentNode.next.value) {
+      currentNode.next = currentNode.next.next;
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  // May be needed?
   const at = (index) => {
     if (index > size() || index < 0) {
       return undefined;
@@ -69,25 +84,15 @@ export function LinkedList() {
     return currentNode.value;
   };
 
-  const pop = () => {
-    const headNodeValue = head();
-    if (headNodeValue) {
-      // Handle single and multi-node at the same time
-      list = list.next || {};
-    }
-
-    return headNodeValue;
-  };
-
-  const contains = (value) => {
+  const contains = (key) => {
     if (size() === 0) return false;
 
     let currentNode = list;
-    while (currentNode.value !== value && currentNode.next !== null) {
+    while (!(key in currentNode.value) && currentNode.next !== null) {
       currentNode = currentNode.next;
     }
 
-    return currentNode.value === value;
+    return key in currentNode.value;
   };
 
   const findIndex = (value) => {
@@ -113,77 +118,17 @@ export function LinkedList() {
     if (size() === 0) return "";
     return traverse(list);
   };
-
-  // Extra Credit
-  const insertAt0 = (index, ...values) => {
-    if (index < 0 || index > size()) {
-      throw new RangeError("Index out of bound.");
-    } else if (size() === 0) {
-      list = makeList(...values);
-    } else {
-      const array = makeArray(list);
-      array.splice(index, 0, ...values);
-      list = makeList(...array);
-    }
-  };
-
-  const insertAt = (index, ...values) => {
-    if (index < 0 || index > size()) {
-      throw new RangeError("Index out of bound.");
-    }
-
-    const insertedList = makeList(...values);
-
-    if (size() === 0) {
-      list = insertedList;
-      return;
-    }
-
-    if (index === 0) {
-      stitchLists(insertedList, list);
-      list = insertedList;
-      return;
-    }
-
-    let current = list;
-    for (let i = 0; i < index - 1; i++) {
-      current = current.next;
-    }
-
-    const restOfList = current.next;
-    current.next = null;
-
-    stitchLists(list, insertedList);
-    stitchLists(list, restOfList);
-  };
-
-  const removeAt = (index) => {
-    if (size() === 0) {
-      list = {};
-    } else if (index < 0 || index > size()) {
-      throw new RangeError("Index out of bound.");
-    } else {
-      const array = makeArray(list);
-      array.splice(index, 1);
-      list = makeList(...array);
-    }
-  };
-
   return {
-    getList,
     initSample,
+    getList,
     clear,
-    append,
     prepend,
     size,
-    head,
-    tail,
+    findLink,
+    removeNode,
     at,
-    pop,
     contains,
     findIndex,
     toString,
-    insertAt,
-    removeAt,
   };
 }
