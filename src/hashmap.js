@@ -2,7 +2,7 @@ import { LinkedList } from "./linkedlist.js";
 import { hash } from "./helpers.js";
 
 export function HashMap(capacity = 16, loadFactor = 0.75) {
-  const hashmap = [];
+  let hashmap = [];
 
   const getHashmap = () => hashmap;
 
@@ -61,7 +61,15 @@ export function HashMap(capacity = 16, loadFactor = 0.75) {
     return returnValue;
   };
 
-  return { getHashmap, printHashmap, set, get, has, remove };
+  const length = () => {
+    return hashmap.reduce((sum, current) => sum + current.size(), 0);
+  };
+
+  const clear = () => {
+    hashmap = [];
+  };
+
+  return { getHashmap, printHashmap, set, get, has, remove, length, clear };
 }
 
 const test = HashMap();
@@ -80,6 +88,10 @@ test.set("lion", "golden");
 
 test.printHashmap();
 
+console.log("# Test length");
+console.log("should print 12: ", test.length());
+test.length();
+
 console.log("# Test get");
 console.log("should print purple: ", test.get("grape"));
 console.log("should print null: ", test.get("hello"));
@@ -91,4 +103,8 @@ console.log("should print false: ", test.has("hello"));
 console.log("# Test remove");
 console.log(test.remove("apple"));
 console.log("hashmap does not include the apple entry");
+test.printHashmap();
+
+console.log("# Test remove");
+test.clear();
 test.printHashmap();
