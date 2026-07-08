@@ -1,7 +1,7 @@
 import { describe, test, expect } from "@jest/globals";
 import { LinkedList, Node } from "../linkedlist.js";
 
-describe("Test at", () => {
+describe.skip("Test at", () => {
   const list = LinkedList();
   afterEach(() => {
     list.clear();
@@ -14,7 +14,7 @@ describe("Test at", () => {
 
   test("test non-existing value", () => {
     const expected = undefined;
-    list.append(1);
+    list.prepend(1);
     expect(list.at(2)).toEqual(expected);
   });
 

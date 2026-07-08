@@ -9,7 +9,12 @@ describe("Test internal auxillary methods", () => {
   });
 
   test("test initSample", () => {
-    const expected = makeList(1, 2, 3, 4);
+    const expected = makeList(
+      { key1: "value1" },
+      { key2: "value2" },
+      { key3: "value3" },
+      { key4: "value4" },
+    );
     const list = LinkedList();
     list.initSample();
     expect(list.getList()).toEqual(expected);

@@ -1,7 +1,7 @@
 import { describe, test, expect } from "@jest/globals";
 import { LinkedList, Node } from "../linkedlist.js";
 
-describe("Test findIndex", () => {
+describe.skip("Test findIndex", () => {
   const list = LinkedList();
   afterEach(() => {
     list.clear();

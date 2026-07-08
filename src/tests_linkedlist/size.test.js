@@ -10,7 +10,7 @@ describe("Test size", () => {
 
   test("test on single-node list", () => {
     const expected = 1;
-    list.append(Node("single node"));
+    list.prepend(Node({ key1: "value1" }));
     expect(list.size()).toBe(expected);
   });
 

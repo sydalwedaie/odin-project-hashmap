@@ -9,30 +9,30 @@ describe("Test contains", () => {
 
   test("test on empty list", () => {
     const expected = false;
-    expect(list.contains(1)).toBe(expected);
+    expect(list.contains("key")).toBe(expected);
   });
 
   test("test non-existing value", () => {
     const expected = false;
     list.initSample();
-    expect(list.contains("does not exist")).toBe(expected);
+    expect(list.contains("value0")).toBe(expected);
   });
 
   test("test existing value at index 0", () => {
     const expected = true;
     list.initSample();
-    expect(list.contains(1)).toBe(expected);
+    expect(list.contains("key1")).toBe(expected);
   });
 
   test("test existing value at index 1", () => {
     const expected = true;
     list.initSample();
-    expect(list.contains(2)).toBe(expected);
+    expect(list.contains("key2")).toBe(expected);
   });
 
   test("test existing value at last index", () => {
     const expected = true;
     list.initSample();
-    expect(list.contains(4)).toBe(expected);
+    expect(list.contains("key4")).toBe(expected);
   });
 });

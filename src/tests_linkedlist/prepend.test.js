@@ -10,25 +10,31 @@ describe("Test prepend", () => {
   });
 
   test("test on empty list", () => {
-    const expected = makeList("prepend");
-    list.prepend("prepend");
+    const expected = makeList({ key1: "value1" });
+    list.prepend({ key1: "value1" });
     expect(list.getList()).toEqual(expected);
   });
 
   test("test on single-node list", () => {
-    const expected = makeList("prepend", 1);
+    const expected = makeList({ key0: "value0" }, { key1: "value1" });
 
-    list.append(1);
-    list.prepend("prepend");
+    list.prepend({ key1: "value1" });
+    list.prepend({ key0: "value0" });
 
     expect(list.getList()).toEqual(expected);
   });
 
   test("test on multi-node list", () => {
-    const expected = makeList("prepend", 1, 2, 3, 4);
+    const expected = makeList(
+      { key0: "value0" },
+      { key1: "value1" },
+      { key2: "value2" },
+      { key3: "value3" },
+      { key4: "value4" },
+    );
 
     list.initSample();
-    list.prepend("prepend");
+    list.prepend({ key0: "value0" });
     expect(list.getList()).toEqual(expected);
   });
 });
