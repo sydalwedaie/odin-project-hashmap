@@ -36,7 +36,7 @@ export function LinkedList() {
     return traverse(list);
   };
 
-  const findLink = (key) => {
+  const findEntry = (key) => {
     if (size() === 0) return null;
 
     let currentNode = list;
@@ -124,7 +124,7 @@ export function LinkedList() {
     clear,
     prepend,
     size,
-    findLink,
+    findEntry,
     removeNode,
     at,
     contains,

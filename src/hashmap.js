@@ -4,27 +4,28 @@ import { hash } from "./helpers.js";
 export function HashMap(capacity = 16, loadFactor = 0.75) {
   let hashmap = [];
 
+  function init(capacity) {
+    for (let i = 0; i < capacity; i++) {
+      hashmap.push(LinkedList());
+    }
+  }
+
+  init(capacity);
+
   const getHashmap = () => hashmap;
 
   const printHashmap = () => {
-    const lists = hashmap.map((item) => item.getList());
-    console.dir(lists, { depth: null, colors: true });
+    const buckets = hashmap.map((bucket) => bucket.getList());
+    console.dir(buckets, { depth: null, colors: true });
   };
 
   const set = (key, value) => {
     const hashCode = hash(key, capacity);
     const bucket = hashmap[hashCode];
+    const entry = bucket.findEntry(key);
 
-    if (bucket === undefined) {
-      const list = LinkedList();
-      list.prepend({ [key]: value });
-      hashmap[hashCode] = list;
-      return;
-    }
-
-    const link = bucket.findLink(key);
-    if (link) {
-      link[key] = value;
+    if (entry) {
+      entry[key] = value;
     } else {
       bucket.prepend({ [key]: value });
     }
@@ -33,26 +34,21 @@ export function HashMap(capacity = 16, loadFactor = 0.75) {
   const get = (key) => {
     const hashCode = hash(key, capacity);
     const bucket = hashmap[hashCode];
-
-    if (bucket === undefined) return null;
-    const link = bucket.findLink(key);
-    return link ? link[key] : null;
+    const entry = bucket.findEntry(key);
+    return entry ? entry[key] : null;
   };
 
   const has = (key) => {
     const hashCode = hash(key, capacity);
     const bucket = hashmap[hashCode];
-
-    if (bucket === undefined) return false;
-    const link = bucket.findLink(key);
-    return link ? true : false;
+    const entry = bucket.findEntry(key);
+    return entry ? true : false;
   };
 
   const remove = (key) => {
     const hashCode = hash(key, capacity);
     const bucket = hashmap[hashCode];
 
-    if (bucket === undefined) return null;
     const returnValue = bucket.removeNode(key);
     if (bucket.size() === 0) {
       hashmap.splice(hashCode, 1);
@@ -62,11 +58,11 @@ export function HashMap(capacity = 16, loadFactor = 0.75) {
   };
 
   const length = () => {
-    return hashmap.reduce((sum, current) => sum + current.size(), 0);
+    return hashmap.reduce((sum, curBucket) => sum + curBucket.size(), 0);
   };
 
   const clear = () => {
-    hashmap = [];
+    hashmap.forEach((bucket) => bucket.clear());
   };
 
   return { getHashmap, printHashmap, set, get, has, remove, length, clear };
@@ -105,6 +101,6 @@ console.log(test.remove("apple"));
 console.log("hashmap does not include the apple entry");
 test.printHashmap();
 
-console.log("# Test remove");
+console.log("# Test clear");
 test.clear();
 test.printHashmap();
