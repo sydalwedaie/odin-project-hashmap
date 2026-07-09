@@ -1,5 +1,5 @@
 import { LinkedList } from "./linkedlist.js";
-import { hash } from "./helpers.js";
+import { hash, loadSampleHashmap } from "./helpers.js";
 
 export function HashMap(capacity = 16, loadFactor = 0.75) {
   // Helper functions
@@ -113,21 +113,20 @@ export function HashMap(capacity = 16, loadFactor = 0.75) {
 }
 
 const test = HashMap();
-test.set("apple", "red");
-test.set("banana", "yellow");
-test.set("carrot", "orange");
-test.set("dog", "brown");
-test.set("elephant", "gray");
-test.set("frog", "green");
-test.set("grape", "purple");
-test.set("hat", "black");
-test.set("ice cream", "white");
-test.set("jacket", "blue");
-test.set("kite", "pink");
-test.set("lion", "golden");
+// loadSampleHashmap(test);
+// console.dir(test.getHashmap(), { depth: null });
 
-console.log(test.print());
-console.dir(test.getHashmap(), { depth: null });
+// override
+// test.set("Carlos", "I am the old value.");
+// test.set("Carlos", "I am the new value.");
+
+// collision
+// test.set("Rama", "value for Rama");
+// test.set("Sita", "value for Sita");
+// console.dir(test.getHashmap(), { depth: null });
+
+// console.log(test.print());
+// console.dir(test.getHashmap(), { depth: null });
 
 // console.log("# Test grow");
 // test.set("moon", "silver");
@@ -147,6 +146,7 @@ console.dir(test.getHashmap(), { depth: null });
 // test.length();
 
 // console.log("# Test get");
+// loadSampleHashmap(test);
 // console.log("should print purple: ", test.get("grape"));
 // console.log("should print null: ", test.get("hello"));
 

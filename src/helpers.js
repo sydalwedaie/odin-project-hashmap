@@ -34,3 +34,24 @@ export function hash(key, capacity) {
 
   return hashCode;
 }
+
+export function loadSampleHashmap(hashmap) {
+  const entries = {
+    apple: "red",
+    banana: "yellow",
+    carrot: "orange",
+    dog: "brown",
+    elephant: "gray",
+    frog: "green",
+    grape: "purple",
+    hat: "black",
+    "ice cream": "white",
+    jacket: "blue",
+    kite: "pink",
+    lion: "golden",
+  };
+
+  for (let key in entries) {
+    hashmap.set(key, entries[key]);
+  }
+}
