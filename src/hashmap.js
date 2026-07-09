@@ -2,27 +2,35 @@ import { LinkedList } from "./linkedlist.js";
 import { hash } from "./helpers.js";
 
 export function HashMap(capacity = 16, loadFactor = 0.75) {
-  let hashmap = [];
-
+  // Helper functions
   function init(capacity) {
     for (let i = 0; i < capacity; i++) {
       hashmap.push(LinkedList());
     }
   }
 
+  function getBucketData(key, capacity) {
+    const hashCode = hash(key, capacity);
+    const bucket = hashmap[hashCode];
+    const entry = bucket.findEntry(key);
+
+    return { hashCode, bucket, entry };
+  }
+
+  // Init hashmap array
+  let hashmap = [];
   init(capacity);
 
+  // Aux methods
   const getHashmap = () => hashmap;
-
   const printHashmap = () => {
     const buckets = hashmap.map((bucket) => bucket.getList());
     console.dir(buckets, { depth: null, colors: true });
   };
 
+  // Primary methods
   const set = (key, value) => {
-    const hashCode = hash(key, capacity);
-    const bucket = hashmap[hashCode];
-    const entry = bucket.findEntry(key);
+    const { bucket, entry } = getBucketData(key, capacity);
 
     if (entry) {
       entry[key] = value;
@@ -32,22 +40,17 @@ export function HashMap(capacity = 16, loadFactor = 0.75) {
   };
 
   const get = (key) => {
-    const hashCode = hash(key, capacity);
-    const bucket = hashmap[hashCode];
-    const entry = bucket.findEntry(key);
+    const { entry } = getBucketData(key, capacity);
     return entry ? entry[key] : null;
   };
 
   const has = (key) => {
-    const hashCode = hash(key, capacity);
-    const bucket = hashmap[hashCode];
-    const entry = bucket.findEntry(key);
+    const { entry } = getBucketData(key, capacity);
     return entry ? true : false;
   };
 
   const remove = (key) => {
-    const hashCode = hash(key, capacity);
-    const bucket = hashmap[hashCode];
+    const { hashCode, bucket } = getBucketData(key, capacity);
 
     const returnValue = bucket.removeNode(key);
     if (bucket.size() === 0) {
@@ -65,7 +68,37 @@ export function HashMap(capacity = 16, loadFactor = 0.75) {
     hashmap.forEach((bucket) => bucket.clear());
   };
 
-  return { getHashmap, printHashmap, set, get, has, remove, length, clear };
+  const keys = () => {
+    const entries = {};
+    hashmap.forEach((bucket) => Object.assign(entries, bucket.getEntries()));
+    return Object.keys(entries);
+  };
+
+  const values = () => {
+    const entries = {};
+    hashmap.forEach((bucket) => Object.assign(entries, bucket.getEntries()));
+    return Object.values(entries);
+  };
+
+  const entries = () => {
+    const entries = {};
+    hashmap.forEach((bucket) => Object.assign(entries, bucket.getEntries()));
+    return Object.entries(entries);
+  };
+
+  return {
+    getHashmap,
+    printHashmap,
+    set,
+    get,
+    has,
+    remove,
+    length,
+    clear,
+    keys,
+    values,
+    entries,
+  };
 }
 
 const test = HashMap();
@@ -84,6 +117,15 @@ test.set("lion", "golden");
 
 test.printHashmap();
 
+console.log("# Test keys");
+console.log(test.keys());
+
+console.log("# Test values");
+console.log(test.values());
+
+console.log("# Test entries");
+console.log(test.entries());
+/*
 console.log("# Test length");
 console.log("should print 12: ", test.length());
 test.length();
@@ -101,6 +143,10 @@ console.log(test.remove("apple"));
 console.log("hashmap does not include the apple entry");
 test.printHashmap();
 
+console.log("# Test keys");
+console.log(test.keys());
+
 console.log("# Test clear");
 test.clear();
 test.printHashmap();
+*/

@@ -70,6 +70,21 @@ export function LinkedList() {
     }
   };
 
+  const getEntries = () => {
+    if (size() === 0) return {};
+
+    const entries = {};
+    let currentNode = list;
+    do {
+      const key = Object.keys(currentNode.value)[0];
+      const value = Object.values(currentNode.value)[0];
+      entries[key] = value;
+      currentNode = currentNode.next;
+    } while (currentNode !== null);
+
+    return entries;
+  };
+
   // May be needed?
   const at = (index) => {
     if (index > size() || index < 0) {
@@ -118,6 +133,7 @@ export function LinkedList() {
     if (size() === 0) return "";
     return traverse(list);
   };
+
   return {
     initSample,
     getList,
@@ -126,6 +142,7 @@ export function LinkedList() {
     size,
     findEntry,
     removeNode,
+    getEntries,
     at,
     contains,
     findIndex,
