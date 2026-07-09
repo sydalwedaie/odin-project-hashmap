@@ -70,7 +70,7 @@ export function LinkedList() {
     }
   };
 
-  const getEntries = () => {
+  const entries = () => {
     if (size() === 0) return {};
 
     const entries = {};
@@ -83,44 +83,6 @@ export function LinkedList() {
     } while (currentNode !== null);
 
     return entries;
-  };
-
-  // May be needed?
-  const at = (index) => {
-    if (index > size() || index < 0) {
-      return undefined;
-    }
-
-    let currentNode = list;
-    for (let i = 0; i < index; i++) {
-      currentNode = currentNode.next || currentNode;
-    }
-
-    return currentNode.value;
-  };
-
-  const contains = (key) => {
-    if (size() === 0) return false;
-
-    let currentNode = list;
-    while (!(key in currentNode.value) && currentNode.next !== null) {
-      currentNode = currentNode.next;
-    }
-
-    return key in currentNode.value;
-  };
-
-  const findIndex = (value) => {
-    if (size() === 0 || !contains(value)) return -1;
-
-    let currentNode = list;
-    let index = 0;
-    while (currentNode.value !== value && currentNode.next !== null) {
-      currentNode = currentNode.next;
-      index++;
-    }
-
-    return index;
   };
 
   const toString = () => {
@@ -142,10 +104,7 @@ export function LinkedList() {
     size,
     findEntry,
     removeNode,
-    getEntries,
-    at,
-    contains,
-    findIndex,
+    entries,
     toString,
   };
 }

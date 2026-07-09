@@ -17,6 +17,14 @@ export function HashMap(capacity = 16, loadFactor = 0.75) {
     return { hashCode, bucket, entry };
   }
 
+  function grow() {
+    capacity = capacity * 2;
+    const entriesArr = entries();
+    clear();
+    init(capacity);
+    entriesArr.forEach((entry) => set(entry[0], entry[1]));
+  }
+
   // Init hashmap array
   let hashmap = [];
   init(capacity);
@@ -36,6 +44,10 @@ export function HashMap(capacity = 16, loadFactor = 0.75) {
       entry[key] = value;
     } else {
       bucket.prepend({ [key]: value });
+    }
+
+    if (entries().length > capacity * loadFactor) {
+      grow();
     }
   };
 
@@ -70,19 +82,19 @@ export function HashMap(capacity = 16, loadFactor = 0.75) {
 
   const keys = () => {
     const entries = {};
-    hashmap.forEach((bucket) => Object.assign(entries, bucket.getEntries()));
+    hashmap.forEach((bucket) => Object.assign(entries, bucket.entries()));
     return Object.keys(entries);
   };
 
   const values = () => {
     const entries = {};
-    hashmap.forEach((bucket) => Object.assign(entries, bucket.getEntries()));
+    hashmap.forEach((bucket) => Object.assign(entries, bucket.entries()));
     return Object.values(entries);
   };
 
   const entries = () => {
     const entries = {};
-    hashmap.forEach((bucket) => Object.assign(entries, bucket.getEntries()));
+    hashmap.forEach((bucket) => Object.assign(entries, bucket.entries()));
     return Object.entries(entries);
   };
 
@@ -117,36 +129,39 @@ test.set("lion", "golden");
 
 test.printHashmap();
 
-console.log("# Test keys");
-console.log(test.keys());
-
-console.log("# Test values");
-console.log(test.values());
-
-console.log("# Test entries");
-console.log(test.entries());
-/*
-console.log("# Test length");
-console.log("should print 12: ", test.length());
-test.length();
-
-console.log("# Test get");
-console.log("should print purple: ", test.get("grape"));
-console.log("should print null: ", test.get("hello"));
-
-console.log("# Test has");
-console.log("should print true: ", test.has("grape"));
-console.log("should print false: ", test.has("hello"));
-
-console.log("# Test remove");
-console.log(test.remove("apple"));
-console.log("hashmap does not include the apple entry");
+console.log("# Test grow");
+test.set("moon", "silver");
 test.printHashmap();
 
-console.log("# Test keys");
-console.log(test.keys());
+// console.log("# Test keys");
+// console.log(test.keys());
 
-console.log("# Test clear");
-test.clear();
-test.printHashmap();
-*/
+// console.log("# Test values");
+// console.log(test.values());
+
+// console.log("# Test entries");
+// console.log(test.entries());
+
+// console.log("# Test length");
+// console.log("should print 12: ", test.length());
+// test.length();
+
+// console.log("# Test get");
+// console.log("should print purple: ", test.get("grape"));
+// console.log("should print null: ", test.get("hello"));
+
+// console.log("# Test has");
+// console.log("should print true: ", test.has("grape"));
+// console.log("should print false: ", test.has("hello"));
+
+// console.log("# Test remove");
+// console.log(test.remove("apple"));
+// console.log("hashmap does not include the apple entry");
+// test.printHashmap();
+
+// console.log("# Test keys");
+// console.log(test.keys());
+
+// console.log("# Test clear");
+// test.clear();
+// test.printHashmap();
