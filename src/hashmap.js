@@ -62,11 +62,7 @@ export function HashMap(capacity = 16, loadFactor = 0.75) {
 
   const remove = (key) => {
     const { hashCode, bucket } = getBucketData(key, capacity);
-
     const returnValue = bucket.removeNode(key);
-    if (bucket.size() === 0) {
-      hashmap.splice(hashCode, 1);
-    }
 
     return returnValue;
   };
@@ -155,9 +151,10 @@ const test = HashMap();
 // console.log("should print false: ", test.has("hello"));
 
 // console.log("# Test remove");
+// loadSampleHashmap(test);
 // console.log(test.remove("apple"));
 // console.log("hashmap does not include the apple entry");
-// test.printHashmap();
+// console.dir(test.getHashmap(), { depth: null });
 
 // console.log("# Test keys");
 // console.log(test.keys());
