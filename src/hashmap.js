@@ -30,7 +30,7 @@ export function HashMap(capacity = 16, loadFactor = 0.75) {
   init(capacity);
 
   // Aux methods
-  const getHashmap = () => hashmap;
+  const getHashmap = () => hashmap.map((bucket) => bucket.print());
   const print = () => {
     return hashmap.map((bucket) => bucket.toString()).join("\n");
   };
@@ -127,10 +127,11 @@ test.set("kite", "pink");
 test.set("lion", "golden");
 
 console.log(test.print());
+console.dir(test.getHashmap(), { depth: null });
 
 // console.log("# Test grow");
 // test.set("moon", "silver");
-// test.printHashmap();
+// console.log(test.print());
 
 // console.log("# Test keys");
 // console.log(test.keys());

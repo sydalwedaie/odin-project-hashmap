@@ -18,7 +18,7 @@ export function LinkedList() {
       { key3: "value3" },
       { key4: "value4" },
     ));
-  const getList = () => list;
+  const print = () => list;
   const clear = () => (list = {});
 
   // Required methods
@@ -100,7 +100,7 @@ export function LinkedList() {
 
   return {
     initSample,
-    getList,
+    print,
     clear,
     prepend,
     size,

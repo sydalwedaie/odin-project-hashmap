@@ -12,7 +12,7 @@ describe("Test prepend", () => {
   test("test on empty list", () => {
     const expected = makeList({ key1: "value1" });
     list.prepend({ key1: "value1" });
-    expect(list.getList()).toEqual(expected);
+    expect(list.print()).toEqual(expected);
   });
 
   test("test on single-node list", () => {
@@ -21,7 +21,7 @@ describe("Test prepend", () => {
     list.prepend({ key1: "value1" });
     list.prepend({ key0: "value0" });
 
-    expect(list.getList()).toEqual(expected);
+    expect(list.print()).toEqual(expected);
   });
 
   test("test on multi-node list", () => {
@@ -35,6 +35,6 @@ describe("Test prepend", () => {
 
     list.initSample();
     list.prepend({ key0: "value0" });
-    expect(list.getList()).toEqual(expected);
+    expect(list.print()).toEqual(expected);
   });
 });

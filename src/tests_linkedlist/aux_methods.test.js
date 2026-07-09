@@ -3,9 +3,9 @@ import { LinkedList } from "../linkedlist.js";
 import { makeList } from "../helpers.js";
 
 describe("Test internal auxillary methods", () => {
-  test("test getList", () => {
+  test("test print", () => {
     const list = LinkedList();
-    expect(list.getList()).toEqual({});
+    expect(list.print()).toEqual({});
   });
 
   test("test initSample", () => {
@@ -17,13 +17,13 @@ describe("Test internal auxillary methods", () => {
     );
     const list = LinkedList();
     list.initSample();
-    expect(list.getList()).toEqual(expected);
+    expect(list.print()).toEqual(expected);
   });
 
   test("test reset", () => {
     const list = LinkedList();
     list.initSample();
     list.clear();
-    expect(list.getList()).toEqual({});
+    expect(list.print()).toEqual({});
   });
 });
