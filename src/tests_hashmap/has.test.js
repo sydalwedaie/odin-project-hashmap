@@ -2,7 +2,7 @@ import { describe, test, expect, afterEach } from "@jest/globals";
 import { HashMap } from "../hashmap.js";
 import { loadSampleHashmap } from "../helpers.js";
 
-describe("Test get", () => {
+describe("Test has", () => {
   const hash = HashMap();
 
   afterEach(() => {
@@ -10,25 +10,25 @@ describe("Test get", () => {
   });
 
   test("test on empty hashmap", () => {
-    const expected = null;
-    expect(hash.get("key x")).toBe(expected);
+    const expected = false;
+    expect(hash.has("key x")).toBe(expected);
   });
 
   test("test non-existing key", () => {
-    const expected = null;
+    const expected = false;
     loadSampleHashmap(hash);
-    expect(hash.get("key x")).toBe(expected);
+    expect(hash.has("key x")).toBe(expected);
   });
 
   test("test existing key", () => {
-    const expected = "yellow";
+    const expected = true;
     loadSampleHashmap(hash);
-    expect(hash.get("banana")).toBe(expected);
+    expect(hash.has("banana")).toBe(expected);
   });
 
   test("test existing key", () => {
-    const expected = "purple";
+    const expected = true;
     loadSampleHashmap(hash);
-    expect(hash.get("grape")).toBe(expected);
+    expect(hash.has("grape")).toBe(expected);
   });
 });
