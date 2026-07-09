@@ -1,15 +1,15 @@
 import { Node } from "./linkedlist.js";
 
-export function makeList(...values) {
-  if (values.length === 0) return {};
-  if (values.length === 1) return Node(values[0]);
-  const nextNode = makeList(...values.slice(1));
-  return Node(values[0], nextNode);
+export function makeList(...entries) {
+  if (entries.length === 0) return {};
+  if (entries.length === 1) return Node(entries[0]);
+  const nextNode = makeList(...entries.slice(1));
+  return Node(entries[0], nextNode);
 }
 
 export function makeArray(list) {
-  if (list.next === null) return [list.value];
-  return [list.value, makeArray(list.next)].flat();
+  if (list.next === null) return [list.entry];
+  return [list.entry, makeArray(list.next)].flat();
 }
 
 export function stitchLists(list1, list2) {

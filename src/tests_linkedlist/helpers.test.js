@@ -2,31 +2,41 @@ import { describe, test, expect } from "@jest/globals";
 import { makeList } from "../helpers.js";
 
 describe("Test helper functions", () => {
-  test("test makeList with one value", () => {
-    const expected = { value: 1, next: null };
-    expect(makeList(1)).toEqual(expected);
+  test("test makeList with one entry", () => {
+    const expected = { entry: { key1: "value1" }, next: null };
+    expect(makeList({ key1: "value1" })).toEqual(expected);
   });
 
-  test("test makeList with two value", () => {
-    const expected = { value: 1, next: { value: 2, next: null } };
-    expect(makeList(1, 2)).toEqual(expected);
-  });
-
-  test("test makeList with many values", () => {
+  test("test makeList with two entries", () => {
     const expected = {
-      value: 1,
+      entry: { key1: "value1" },
+      next: { entry: { key2: "value2" }, next: null },
+    };
+    expect(makeList({ key1: "value1" }, { key2: "value2" })).toEqual(expected);
+  });
+
+  test("test makeList with many entries", () => {
+    const expected = {
+      entry: { key1: "value1" },
       next: {
-        value: 2,
+        entry: { key2: "value2" },
         next: {
-          value: 3,
+          entry: { key3: "value3" },
           next: {
-            value: 4,
+            entry: { key4: "value4" },
             next: null,
           },
         },
       },
     };
 
-    expect(makeList(1, 2, 3, 4)).toEqual(expected);
+    expect(
+      makeList(
+        { key1: "value1" },
+        { key2: "value2" },
+        { key3: "value3" },
+        { key4: "value4" },
+      ),
+    ).toEqual(expected);
   });
 });

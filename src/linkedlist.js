@@ -1,8 +1,8 @@
-import { makeList, makeArray, stitchLists } from "./helpers.js";
+import { makeList, makeArray } from "./helpers.js";
 
-export function Node(value, nextNode) {
+export function Node(entry, nextNode) {
   return {
-    value: value || null,
+    entry: entry || null,
     next: nextNode || null,
   };
 }
@@ -22,8 +22,8 @@ export function LinkedList() {
   const clear = () => (list = {});
 
   // Required methods
-  const prepend = (value) => {
-    list = size() === 0 ? Node(value) : Node(value, list);
+  const prepend = (entry) => {
+    list = size() === 0 ? Node(entry) : Node(entry, list);
   };
 
   const size = () => {
@@ -40,29 +40,29 @@ export function LinkedList() {
     if (size() === 0) return null;
 
     let currentNode = list;
-    while (!(key in currentNode.value) && currentNode.next !== null) {
+    while (!(key in currentNode.entry) && currentNode.next !== null) {
       currentNode = currentNode.next;
     }
 
-    return key in currentNode.value ? currentNode.value : null;
+    return key in currentNode.entry ? currentNode.entry : null;
   };
 
   const removeNode = (key) => {
     if (size() === 0) return false;
 
     // Found at first index
-    if (key in list.value) {
+    if (key in list.entry) {
       list = size() === 1 ? {} : list.next;
       return true;
     }
 
     // Traverse to find in rest
     let currentNode = list;
-    while (currentNode.next !== null && !(key in currentNode.next.value)) {
+    while (currentNode.next !== null && !(key in currentNode.next.entry)) {
       currentNode = currentNode.next;
     }
 
-    if (currentNode.next !== null && key in currentNode.next.value) {
+    if (currentNode.next !== null && key in currentNode.next.entry) {
       currentNode.next = currentNode.next.next;
       return true;
     } else {
@@ -76,8 +76,8 @@ export function LinkedList() {
     const entries = {};
     let currentNode = list;
     do {
-      const key = Object.keys(currentNode.value)[0];
-      const value = Object.values(currentNode.value)[0];
+      const key = Object.keys(currentNode.entry)[0];
+      const value = Object.values(currentNode.entry)[0];
       entries[key] = value;
       currentNode = currentNode.next;
     } while (currentNode !== null);
@@ -87,12 +87,14 @@ export function LinkedList() {
 
   const toString = () => {
     function traverse(list) {
-      let string = `( ${list.value} ) -> `;
+      const key = Object.keys(list.entry)[0];
+      const value = Object.values(list.entry)[0];
+      let string = `( ${key}: ${value} ) -> `;
       if (list.next === null) return (string += "null");
       return string + traverse(list.next);
     }
 
-    if (size() === 0) return "";
+    if (size() === 0) return "-";
     return traverse(list);
   };
 

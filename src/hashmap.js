@@ -31,9 +31,8 @@ export function HashMap(capacity = 16, loadFactor = 0.75) {
 
   // Aux methods
   const getHashmap = () => hashmap;
-  const printHashmap = () => {
-    const buckets = hashmap.map((bucket) => bucket.getList());
-    console.dir(buckets, { depth: null, colors: true });
+  const print = () => {
+    return hashmap.map((bucket) => bucket.toString()).join("\n");
   };
 
   // Primary methods
@@ -100,7 +99,7 @@ export function HashMap(capacity = 16, loadFactor = 0.75) {
 
   return {
     getHashmap,
-    printHashmap,
+    print,
     set,
     get,
     has,
@@ -127,11 +126,11 @@ test.set("jacket", "blue");
 test.set("kite", "pink");
 test.set("lion", "golden");
 
-test.printHashmap();
+console.log(test.print());
 
-console.log("# Test grow");
-test.set("moon", "silver");
-test.printHashmap();
+// console.log("# Test grow");
+// test.set("moon", "silver");
+// test.printHashmap();
 
 // console.log("# Test keys");
 // console.log(test.keys());
