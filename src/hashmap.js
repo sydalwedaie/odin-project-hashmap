@@ -1,8 +1,19 @@
 import { LinkedList } from "./linkedlist.js";
-import { hash, loadSampleHashmap } from "./helpers.js";
+import { loadSampleHashmap } from "./helpers.js";
 
 export function HashMap(capacity = 16, loadFactor = 0.75) {
   // Helper functions
+  function hash(key, capacity) {
+    let hashCode = 0;
+
+    const primeNumber = 31;
+    for (let i = 0; i < key.length; i++) {
+      hashCode = (primeNumber * hashCode + key.charCodeAt(i)) % capacity;
+    }
+
+    return hashCode;
+  }
+
   function init(capacity) {
     hashmap.splice(0);
     for (let i = 0; i < capacity; i++) {
