@@ -1,4 +1,4 @@
-# Project Hash Map - README
+# The Odin Project - Hash Map
 
 This is the solution to The Odin Project's [Hash Map](https://www.theodinproject.com/lessons/javascript-hashmap) challenge. The goal is to implement a basic hash map structure with a few rudimentary methods.
 
