@@ -13,9 +13,13 @@ describe("Test the grow functionality", () => {
   });
 
   test("test overriding logic", () => {
-    const expected = "not pink";
     hash.set("kite", "not pink");
-    expect(hash.get("kite")).toBe(expected);
+    expect(hash.get("kite")).toBe("not pink");
+  });
+
+  test("test collision logic", () => {
+    hash.set("door", "lime");
+    expect(hash.get("door")).toBe("lime");
   });
 
   test("test remove and has", () => {

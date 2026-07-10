@@ -46,8 +46,7 @@ const test = HashMap();
 // test.clear();
 // test.printHashmap();
 
-console.log("# Test grow");
-loadSampleHashmap(test);
-test.set("moon", "silver");
-console.log("-----------");
-console.dir(test.getHashmap(), { depth: null });
+// console.log("# Test grow");
+// loadSampleHashmap(test);
+// test.set("moon", "silver");
+// console.dir(test.getHashmap(), { depth: null });
