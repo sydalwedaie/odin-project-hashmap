@@ -8,7 +8,7 @@ This is the solution to The Odin Project's [Hash Map](https://www.theodinproject
 - `helpers.js` contains helper functions used in both modules, as well as in the tests.
 - The test suites for each module live in their respective directories: `/tests_hashmap` and `/tests_linkedlist`. Each method has its own `.test.js` file.
 
-## How a HashMap is structured
+## How a hash map is structured
 
 A hash map is essentially an **array of linked lists**, with each list acting as a _bucket_. Each value (or entry, in the context of hash maps) in the linked list is an object containing one _key-value_ pair.
 
@@ -68,12 +68,15 @@ It optionally accepts a _capacity_ and _load factor_ argument. The defaults are 
 8. `values()` returns an **array** containing all the values.
 9. `entries()` returns an **array** that contains each key, value pair. Example: [[firstKey, firstValue], [secondKey, secondValue]]
 
-I also created some auxiliary methods to help with visualization and testing.
+## How to display a hash map
+
+I created two auxiliary methods and a helper function to help with visualization and testing.
 
 - `getHashmap()` returns the main array of linked lists. This method is used extensively in the test suites to examine the state of hash maps.
 - `print()` returns a string representation of that array and acts as pure eye candy!
+- `loadSampleHashmap(hashmap)` takes a hashmap instance and loads sample data up to the capacity.
 
-Finally, there's a helper function, `loadSampleHashmap(hashmap)`, that takes a hashmap instance and loads sample data up to the capacity. The following is the output of running `getHashmap()` and `print()` on a loaded hash map:
+The following is the minimum code needed to create and load a sample hash map:
 
 ```js
 const test = HashMap();
@@ -81,6 +84,8 @@ loadSampleHashmap(test);
 console.dir(test.getHashmap(), { depth: null });
 console.log(test.print());
 ```
+
+## The output of running `getHashmap()`
 
 ```js
 [
@@ -108,6 +113,8 @@ console.log(test.print());
   { entry: { kite: "pink" }, next: null },
 ];
 ```
+
+### The output of running `print()`
 
 ```
 -
