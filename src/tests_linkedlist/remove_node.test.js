@@ -12,7 +12,7 @@ describe("Test removeNode", () => {
     const expectedReturn = false;
     const expectedList = {};
     expect(list.removeNode("key")).toEqual(expectedReturn);
-    expect(list.print()).toEqual(expectedList);
+    expect(list.getList()).toEqual(expectedList);
   });
 
   test("test non-existing key", () => {
@@ -26,7 +26,7 @@ describe("Test removeNode", () => {
 
     list.initSample();
     expect(list.removeNode("key0")).toEqual(expectedReturn);
-    expect(list.print()).toEqual(expectedList);
+    expect(list.getList()).toEqual(expectedList);
   });
 
   test("test existing key at index 0", () => {
@@ -39,7 +39,7 @@ describe("Test removeNode", () => {
 
     list.initSample();
     expect(list.removeNode("key1")).toEqual(expectedReturn);
-    expect(list.print()).toEqual(expectedList);
+    expect(list.getList()).toEqual(expectedList);
   });
 
   test("test existing key at index 1", () => {
@@ -52,7 +52,7 @@ describe("Test removeNode", () => {
 
     list.initSample();
     expect(list.removeNode("key2")).toEqual(expectedReturn);
-    expect(list.print()).toEqual(expectedList);
+    expect(list.getList()).toEqual(expectedList);
   });
 
   test("test existing key at last index", () => {
@@ -65,6 +65,6 @@ describe("Test removeNode", () => {
 
     list.initSample();
     expect(list.removeNode("key4")).toEqual(expectedReturn);
-    expect(list.print()).toEqual(expectedList);
+    expect(list.getList()).toEqual(expectedList);
   });
 });

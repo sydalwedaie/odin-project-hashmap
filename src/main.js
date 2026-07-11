@@ -2,8 +2,9 @@ import { HashMap } from "./hashmap.js";
 import { loadSampleHashmap } from "./helpers.js";
 
 const test = HashMap();
-// loadSampleHashmap(test);
+loadSampleHashmap(test);
 // console.dir(test.getHashmap(), { depth: null });
+// console.log(test.print());
 
 // console.log('# Test set override')
 // test.set("Carlos", "I am the old value.");

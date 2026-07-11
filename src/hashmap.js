@@ -1,20 +1,18 @@
 import { LinkedList } from "./linkedlist.js";
-import { loadSampleHashmap } from "./helpers.js";
 
 export function HashMap(capacity = 16, loadFactor = 0.75) {
   // Helper functions
   function hash(key, capacity) {
     let hashCode = 0;
-
     const primeNumber = 31;
     for (let i = 0; i < key.length; i++) {
       hashCode = (primeNumber * hashCode + key.charCodeAt(i)) % capacity;
     }
-
     return hashCode;
   }
 
   function init(capacity) {
+    // The hash map needs to be completely empty for the grow function to work properly
     hashmap.splice(0);
     for (let i = 0; i < capacity; i++) {
       hashmap.push(LinkedList());
@@ -23,9 +21,11 @@ export function HashMap(capacity = 16, loadFactor = 0.75) {
 
   function getBucketData(key, capacity) {
     const hashCode = hash(key, capacity);
+    if (hashCode < 0 || hashCode >= capacity) {
+      throw new Error("Trying to access index out of bounds");
+    }
     const bucket = hashmap[hashCode];
     const entry = bucket.findEntry(key);
-
     return { hashCode, bucket, entry };
   }
 
@@ -33,7 +33,7 @@ export function HashMap(capacity = 16, loadFactor = 0.75) {
     capacity = capacity * 2;
     const entriesArr = entries();
     init(capacity);
-    entriesArr.forEach((entry) => set(entry[0], entry[1]));
+    entriesArr.forEach(([key, value]) => set(key, value));
   }
 
   // Init hashmap array
@@ -41,7 +41,7 @@ export function HashMap(capacity = 16, loadFactor = 0.75) {
   init(capacity);
 
   // Aux methods
-  const getHashmap = () => hashmap.map((bucket) => bucket.print());
+  const getHashmap = () => hashmap.map((bucket) => bucket.getList());
   const print = () => {
     return hashmap.map((bucket) => bucket.toString()).join("\n");
   };
@@ -72,9 +72,8 @@ export function HashMap(capacity = 16, loadFactor = 0.75) {
   };
 
   const remove = (key) => {
-    const { hashCode, bucket } = getBucketData(key, capacity);
+    const { bucket } = getBucketData(key, capacity);
     const returnValue = bucket.removeNode(key);
-
     return returnValue;
   };
 

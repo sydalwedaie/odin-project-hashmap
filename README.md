@@ -8,9 +8,9 @@ This is the solution to The Odin Project's [Hash Map](https://www.theodinproject
 - `helpers.js` contains helper functions used in both modules, as well as in the tests.
 - The test suites for each module live in their respective directories: `/tests_hashmap` and `/tests_linkedlist`. Each method has its own `.test.js` file.
 
-## My mental model of a hash map
+## How a HashMap is structured
 
-A hash map is essentially an **array of linked lists** acting as _buckets_. Each value (or entry, in the context of hash maps) in the linked list could be a single _key_, or an object containing a _key-value pair_. The assignment asks to create the latter.
+A hash map is essentially an **array of linked lists**, with each list acting as a _bucket_. Each value (or entry, in the context of hash maps) in the linked list is an object containing one _key-value_ pair.
 
 So the hash map would have this format:
 
@@ -21,15 +21,9 @@ So the hash map would have this format:
 ]
 ```
 
-Initially, I thought I could drop the linked list factory function I created in the [previous project](https://github.com/sydalwedaie/odin-project-linked-lists). Soon I realized I should modify it to work with entries in the key-value format. I also could remove many methods not needed for a hashmap.
+To add linked lists to the array, I thought I could drop the linked list factory function I created in the [previous project](https://github.com/sydalwedaie/odin-project-linked-lists). Soon I realized I needed to modify it to work with entries in the key-value format. I also could remove many methods not needed for a hashmap. One such method was the `append` method. I figured the `prepend` method was a much more performant way of adding nodes to the linked list, because it didn't need to traverse the whole list till the end.
 
-A key decision I had to make was the way to define an empty hash map. Initially, I had it set to an empty array. However, that proved to add way too much complexity in each method, as I had to deal with the possibility of having empty slots. So I decided to make it an array of `capacity` length empty linked lists: `[{}, {}, {}, …]`.
-
-## Features of the hash map
-
-A hash map is created by calling its factory function: `const hashmap = HashMap()`. It optionally accepts a _capacity_ and _load factor_ argument. The defaults are set to 16 and 0.75, respectively. This means there will be 16 buckets, with a maximum load factor of 12 entries. The hash map will expand to double its size if the number of entries exceeds 12.
-
-**Note**: The number of entries differs from the number of buckets, since each node of the linked list is considered an entry.
+Another key decision I had to make was the way to define an empty hash map. Initially, I had it set to an empty array. However, that proved to add way too much complexity in each method, as I had to deal with the possibility of having empty slots. So I decided to make it an array of `capacity` length empty linked lists: `[{}, {}, {}, …]`.
 
 ## The hash function
 
@@ -50,6 +44,18 @@ function hash(key, capacity) {
 
 By taking the remainder of the hash divided by capacity, we can effectively get the index of the destination bucket straight away.
 
+## How to instantiate and use a hash map
+
+A hash map is created by calling its factory function:
+
+```js
+const hashmap = HashMap();
+```
+
+It optionally accepts a _capacity_ and _load factor_ argument. The defaults are set to 16 and 0.75, respectively. This means there will be 16 buckets, with a maximum load factor of 12 entries. The hash map will expand to double its size if the number of entries exceeds 12.
+
+**Note**: The number of entries differs from the number of buckets, since each node of the linked list is considered an entry.
+
 ### Public methods
 
 1. `set(key, value)` adds a new entry to the hash map. If the key already exists, this method overrides the existing entry with the new value.
@@ -66,6 +72,61 @@ I also created some auxiliary methods to help with visualization and testing.
 
 - `getHashmap()` returns the main array of linked lists. This method is used extensively in the test suites to examine the state of hash maps.
 - `print()` returns a string representation of that array and acts as pure eye candy!
+
+Finally, there's a helper function, `loadSampleHashmap(hashmap)`, that takes a hashmap instance and loads sample data up to the capacity. The following is the output of running `getHashmap()` and `print()` on a loaded hash map:
+
+```js
+const test = HashMap();
+loadSampleHashmap(test);
+console.dir(test.getHashmap(), { depth: null });
+console.log(test.print());
+```
+
+```js
+[
+  {},
+  { entry: { elephant: "gray" }, next: null },
+  {},
+  { entry: { carrot: "orange" }, next: null },
+  { entry: { frog: "green" }, next: null },
+  { entry: { banana: "yellow" }, next: null },
+  {},
+  {},
+  {},
+  {},
+  { entry: { apple: "red" }, next: null },
+  {
+    entry: { hat: "black" },
+    next: { entry: { grape: "purple" }, next: null },
+  },
+  {
+    entry: { lion: "golden" },
+    next: { entry: { dog: "brown" }, next: null },
+  },
+  { entry: { "ice cream": "white" }, next: null },
+  { entry: { jacket: "blue" }, next: null },
+  { entry: { kite: "pink" }, next: null },
+];
+```
+
+```
+-
+( elephant: gray ) -> null
+-
+( carrot: orange ) -> null
+( frog: green ) -> null
+( banana: yellow ) -> null
+-
+-
+-
+-
+( apple: red ) -> null
+( hat: black ) -> ( grape: purple ) -> null
+( lion: golden ) -> ( dog: brown ) -> null
+( ice cream: white ) -> null
+( jacket: blue ) -> null
+( kite: pink ) -> null
+```
 
 ## Tools used
 
