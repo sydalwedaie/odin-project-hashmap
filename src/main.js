@@ -1,8 +1,8 @@
 import { HashMap } from "./hashmap.js";
 import { loadSampleHashmap } from "./helpers.js";
 
-const test = HashMap();
-loadSampleHashmap(test);
+// const test = HashMap();
+// loadSampleHashmap(test);
 // console.dir(test.getHashmap(), { depth: null });
 // console.log(test.print());
 

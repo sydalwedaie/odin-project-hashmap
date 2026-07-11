@@ -25,6 +25,7 @@ export function stitchLists(list1, list2) {
 }
 
 export function loadSampleHashmap(hashmap) {
+  hashmap.clear();
   const entries = {
     apple: "red",
     banana: "yellow",
