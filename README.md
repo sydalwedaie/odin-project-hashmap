@@ -85,7 +85,7 @@ console.dir(test.getHashmap(), { depth: null });
 console.log(test.print());
 ```
 
-## The output of running `getHashmap()`
+### The output of running `getHashmap()`
 
 ```js
 [
